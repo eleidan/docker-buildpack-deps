@@ -27,3 +27,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && chmod a+x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD ["bash"]
