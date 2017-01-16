@@ -18,16 +18,4 @@ if [[ $OLD_UID != $THE_UID && $THE_UID != "0" ]]; then
   && echo "Updated UID and GID for the '$THE_USER' user according to the '$APP_DIR' directory."
 fi
 
-## 3. Change owner of the files
-if [[ $OLD_UID != $THE_UID && $THE_UID != "0"  ]]; then
-  chown $THE_UID:$THE_GID \
-    $HOME/.bash_customizations \
-    $HOME/.bash_history \
-    $HOME/.bash_logout \
-    $HOME/.bashrc \
-    $HOME/.profile \
-    $HOME \
-    && echo "Updated ownership on $HOME directory according to new UID and GID."
-fi
-
 exec gosu $THE_USER "$@"
