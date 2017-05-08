@@ -1,5 +1,9 @@
 FROM eleidan/debian:jessie
-MAINTAINER Oleg Kulyk
+
+LABEL maintainer="Oleg Kulyk" \
+      description="Debian GNU/Linux 8 (jessie), curl" \
+      run="docker run -it --rm -v $(pwd):/home/phantom/app eleidan/buildpack-deps:jessie-curl" \
+      version="2017-05-08"
 
 ARG CUSTOM_USER=phantom
 
@@ -27,5 +31,3 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && chmod a+x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD ["bash"]

@@ -1,15 +1,18 @@
 FROM eleidan/buildpack-deps:jessie-curl
-MAINTAINER Oleg Kulyk
+
+LABEL maintainer="Oleg Kulyk" \
+      description="Debian GNU/Linux 8 (jessie), scm" \
+      run="docker run -it --rm -v $(pwd):/home/phantom/app eleidan/buildpack-deps:jessie-scm" \
+      version="2017-05-08"
 
 ENV SERVICE_NAME="buildpack-deps:jessie-scm"
 
-# procps is very common in build systems, and is a reasonably small package
 RUN apt-get update && apt-get install -y --no-install-recommends \
-			bzr \
-			git \
-			mercurial \
-			openssh-client \
-			subversion \
-			\
-			procps \
-	&& rm -rf /var/lib/apt/lists/*
+        bzr \
+        git \
+        mercurial \
+        openssh-client \
+        subversion \
+        \
+        procps \
+    && rm -rf /var/lib/apt/lists/*
