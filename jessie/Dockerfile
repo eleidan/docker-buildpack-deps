@@ -1,9 +1,9 @@
-FROM eleidan/buildpack-deps:jessie-scm
+FROM eleidan/buildpack-deps-scm:jessie
 
 LABEL maintainer="Oleg Kulyk" \
-      description="Debian GNU/Linux 8 (jessie), buildpack-deps" \
+      description="Debian GNU/Linux jessie, buildpack-deps" \
       run="docker run -it --rm -v $(pwd):/home/phantom/app eleidan/buildpack-deps:jessie" \
-      version="2017-05-08"
+      version="2017-07-07"
 
 ENV SERVICE_NAME="buildpack-deps:jessie"
 
