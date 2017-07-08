@@ -5,11 +5,12 @@ read -r -d '' USAGE << EOM
 Create release sources based on existing one.
 
 Usage:
-  $PROGRAM -r VERSION
+  $PROGRAM -f FAMILY -r VERSION
   $PROGRAM [--help]
 
 Options:
   -r, --release-version=VERSION     Specify release version.
+  -f, --family=FAMILY               Specify distribution family.
       --help                        Print help message.
 EOM
 
@@ -30,6 +31,10 @@ function process_params {
     case "$1" in
         -r|--release-version)
             RELEASE_VERSION=$(echo "$2" | tr '[:upper:]' '[:lower:]')
+            shift 2
+            ;;
+        -f|--family)
+            FAMILY=$(echo "$2" | tr '[:upper:]' '[:lower:]')
             shift 2
             ;;
         -h|--help)
@@ -55,9 +60,18 @@ function validate_release_version_is_specified {
   fi
 }
 
+function validate_family_is_specified {
+  if [[ "${FAMILY}x" = "x" ]]; then
+    echo "Error: Distribution family is not specified"
+    exit 1
+  fi
+}
+
 function validate_input {
   validate_release_version_is_specified
+  validate_family_is_specified
 }
+
 ################################################################################
 getopt --test > /dev/null
 if [[ $? -ne 4 ]]; then
@@ -65,8 +79,8 @@ if [[ $? -ne 4 ]]; then
     exit 1
 fi
 
-SHORT="r:"
-LONG="release-version:,help"
+SHORT="r:f:"
+LONG="release-version:,family:,help"
 PARSED=$(getopt --options $SHORT --longoptions $LONG --name "$0" -- "$@")
 
 
@@ -82,10 +96,16 @@ eval set -- "$PARSED"
 
 process_params $@
 validate_input
-cp -r jessie $RELEASE_VERSION
+BASE_RELEASE="jessie"
+case $FAMILY in
+  ubuntu )
+    BASE_RELEASE="xenial"
+    ;;
+esac
+cp -r $BASE_RELEASE $RELEASE_VERSION
 
 TARGET_FILE="${RELEASE_VERSION}/Dockerfile"
 sed -i -r \
-    -e "s/jessie/${RELEASE_VERSION}/g" \
+    -e "s/$BASE_RELEASE/${RELEASE_VERSION}/g" \
     -e "s/version=\S*/version=\"$(date +"%F")\"/g" \
     ${TARGET_FILE}
