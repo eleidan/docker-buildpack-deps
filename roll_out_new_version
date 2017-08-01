@@ -101,10 +101,13 @@ case $FAMILY in
   ubuntu )
     BASE_RELEASE="xenial"
     ;;
+  centos )
+    BASE_RELEASE="6.6"
+    ;;
 esac
-cp -r $BASE_RELEASE $RELEASE_VERSION
+cp -r ${FAMILY}/$BASE_RELEASE ${FAMILY}/$RELEASE_VERSION
 
-TARGET_FILE="${RELEASE_VERSION}/Dockerfile"
+TARGET_FILE="${FAMILY}/${RELEASE_VERSION}/Dockerfile"
 sed -i -r \
     -e "s/$BASE_RELEASE/${RELEASE_VERSION}/g" \
     -e "s/version=\S*/version=\"$(date +"%F")\"/g" \
