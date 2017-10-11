@@ -1,15 +1,16 @@
-FROM eleidan/buildpack-deps-scm:xenial
+FROM eleidan/buildpack-deps-scm:ubuntu-16.04
 
 LABEL maintainer="Oleg Kulyk" \
-      description="Ubuntu 16.04 xenial, buildpack-deps" \
-      run="docker run -it --rm -v $(pwd):/home/phantom/app eleidan/buildpack-deps:xenial" \
+      description="Ubuntu 16.04, buildpack-deps" \
+      run="docker run -it --rm -v $(pwd):/home/phantom/app eleidan/buildpack-deps:ubuntu-16.04" \
       version="2017-07-09"
 
-ENV SERVICE_NAME="buildpack-deps:xenial"
+ENV SERVICE_NAME="buildpack-deps:ubuntu-16.04"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         autoconf \
         automake \
+        bash-completion \
         bzip2 \
         file \
         g++ \

@@ -1,15 +1,16 @@
-FROM eleidan/buildpack-deps-scm:trusty
+FROM eleidan/buildpack-deps-scm:ubuntu-14.04
 
 LABEL maintainer="Oleg Kulyk" \
-      description="Ubuntu 14.04 trusty, buildpack-deps" \
-      run="docker run -it --rm -v $(pwd):/home/phantom/app eleidan/buildpack-deps:trusty" \
+      description="Ubuntu 14.04, buildpack-deps" \
+      run="docker run -it --rm -v $(pwd):/home/phantom/app eleidan/buildpack-deps:ubuntu-14.04" \
       version="2017-07-09"
 
-ENV SERVICE_NAME="buildpack-deps:trusty"
+ENV SERVICE_NAME="buildpack-deps:ubuntu-14.04"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         autoconf \
         automake \
+        bash-completion \
         bzip2 \
         file \
         g++ \
